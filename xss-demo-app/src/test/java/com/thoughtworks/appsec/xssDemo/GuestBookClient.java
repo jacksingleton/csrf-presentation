@@ -58,6 +58,10 @@ public class GuestBookClient {
         throw new UnsupportedOperationException(); // TODO
     }
 
+    public void clearEntries() {
+        throw new UnsupportedOperationException(); // TODO
+    }
+
     public static class Entry {
         public String getMessage() {
             throw new UnsupportedOperationException(); // TODO

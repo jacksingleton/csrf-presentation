@@ -7,6 +7,6 @@ test {
     exclude "**/*IntTest*"
 }
 
-task intTest (type:Test, dependsOn: ['testClasses']) {
+task intTest (type:Test, dependsOn: ['test']) {
     include '**/*IntTest.*'
 }
