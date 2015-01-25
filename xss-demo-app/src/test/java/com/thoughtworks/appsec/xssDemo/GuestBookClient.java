@@ -38,7 +38,7 @@ public class GuestBookClient {
     }
 
     private Optional<Integer> ping() {
-        HttpGet get = new HttpGet(root + "/ping");
+        HttpGet get = new HttpGet(root + "/health");
         try (CloseableHttpClient client = HttpClientBuilder.create().build()) {
             final CloseableHttpResponse response = client.execute(get);
             return Optional.of(response.getStatusLine().getStatusCode());
@@ -68,6 +68,8 @@ public class GuestBookClient {
                 throw new TestException(String.format("Failed to delete: %s",
                         response.getStatusLine().getReasonPhrase()));
             }
+
+            response.getEntity().writeTo(System.out);
         } catch (IOException e) {
             throw new TestException("Failed to clean entries.", e);
         }

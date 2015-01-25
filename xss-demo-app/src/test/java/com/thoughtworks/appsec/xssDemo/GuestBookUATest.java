@@ -19,8 +19,8 @@ public class GuestBookUATest extends FluentTest {
 
     @Before
     public void setUp(){
-//        client.waitForPing();
-//        client.clearEntries();
+        client.waitForPing();
+        client.clearEntries();
     }
 
     @Override

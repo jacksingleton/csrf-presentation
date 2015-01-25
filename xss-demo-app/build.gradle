@@ -1,5 +1,3 @@
-
-//mainClassName = "com.thoughtworks.appsec.xssDemo.GuestBookServerMain"
 version = "1.0"
 
 dependencies {
