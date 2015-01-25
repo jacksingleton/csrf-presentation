@@ -1,6 +1,7 @@
 package com.thoughtworks.appsec.xssDemo;
 
 import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
@@ -36,7 +37,7 @@ public class GuestBookClient {
         throw new TestException("Timed out waiting for condition.");
     }
 
-    private Optional<Integer> ping(){
+    private Optional<Integer> ping() {
         HttpGet get = new HttpGet(root + "/ping");
         try (CloseableHttpClient client = HttpClientBuilder.create().build()) {
             final CloseableHttpResponse response = client.execute(get);
@@ -59,7 +60,17 @@ public class GuestBookClient {
     }
 
     public void clearEntries() {
-        throw new UnsupportedOperationException(); // TODO
+        HttpDelete delete = new HttpDelete(root + "/entries");
+        try (CloseableHttpClient client = HttpClientBuilder.create().build()) {
+            final CloseableHttpResponse response = client.execute(delete);
+
+            if (response.getStatusLine().getStatusCode() != 200) {
+                throw new TestException(String.format("Failed to delete: %s",
+                        response.getStatusLine().getReasonPhrase()));
+            }
+        } catch (IOException e) {
+            throw new TestException("Failed to clean entries.", e);
+        }
     }
 
     public static class Entry {

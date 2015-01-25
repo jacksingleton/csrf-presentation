@@ -1,30 +1,42 @@
 package com.thoughtworks.appsec.xssDemo;
 
-import com.thoughtworks.appsec.xssDemo.GuestBookClient.Entry;
+import org.fluentlenium.adapter.FluentTest;
+import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-
-import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 @Ignore
-public class GuestBookUATest {
+public class GuestBookUATest extends FluentTest {
 
-    private GuestBookClient client = new GuestBookClient("http://localhost:8080");
+    public static final String BASE_APP_URL = "http://localhost:8080";
+    private static final String HOME_PAGE = "/";
+    private static final String ENTRY_FORM = "#entry-form";
+    private static final String ENTRY = ".entry";
 
-    @Test
+    private GuestBookClient client = new GuestBookClient(BASE_APP_URL);
+
+    @Before
     public void setUp(){
+        client.waitForPing();
         client.clearEntries();
+    }
+
+    @Override
+    public String getDefaultBaseUrl() {
+        return BASE_APP_URL;
     }
 
     @Test
     public void testWriteInGuestBookCreatesNewEntry() {
-        client.postEntry("Hi Mom!");
-        List<Entry> entries = client.getEntries();
-        assertThat(entries.size(), is(1));
-        assertThat(entries.get(0).getMessage(), is("Hi Mom!"));
+        goTo(HOME_PAGE).await().untilPage().isLoaded()
+                .fill(ENTRY_FORM)
+                .with("Hi Mom!")
+                .submit(ENTRY_FORM)
+                .await().untilPage().isLoaded();
+        assertThat(findFirst(ENTRY).getText(), is("Hi Mom!"));
     }
 
 }

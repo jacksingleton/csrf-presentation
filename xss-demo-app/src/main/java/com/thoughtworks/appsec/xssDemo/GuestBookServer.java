@@ -18,6 +18,7 @@ public class GuestBookServer {
 
     public GuestBookServer(final int port) {
         server = new Server(port);
+        server.setStopAtShutdown(true);
         server.setHandler(getHandlers());
     }
 
@@ -45,11 +46,4 @@ public class GuestBookServer {
         }
     }
 
-    public void stop() {
-        try {
-            server.stop();
-        } catch (Exception e) {
-            throw new RuntimeException("Server failed to stop.");
-        }
-    }
 }
