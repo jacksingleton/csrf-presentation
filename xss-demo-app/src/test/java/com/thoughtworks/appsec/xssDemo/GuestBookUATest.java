@@ -12,7 +12,7 @@ public class GuestBookUATest extends FluentTest {
 
     public static final String BASE_APP_URL = "http://localhost:8080";
     private static final String HOME_PAGE = "/";
-    private static final String ENTRY_FORM = "#entry-form";
+    private static final String ENTRY_FORM_TEXT = "#entry-form-text";
     private static final String ENTRY = ".entry";
 
     private GuestBookClient client = new GuestBookClient(BASE_APP_URL);
@@ -37,9 +37,9 @@ public class GuestBookUATest extends FluentTest {
     @Ignore
     public void testWriteInGuestBookCreatesNewEntry() {
         goTo(HOME_PAGE).await().untilPage().isLoaded()
-                .fill(ENTRY_FORM)
+                .fill(ENTRY_FORM_TEXT)
                 .with("Hi Mom!")
-                .submit(ENTRY_FORM)
+                .submit(ENTRY_FORM_TEXT)
                 .await().untilPage().isLoaded();
         assertThat(findFirst(ENTRY).getText(), is("Hi Mom!"));
     }

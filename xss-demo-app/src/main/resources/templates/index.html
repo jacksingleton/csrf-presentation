@@ -7,9 +7,14 @@
             <h1>Guest Book</h1>
         </header>
         <section>
-            <form id="#entry-form">
+            <form th:action="@{/entries/}" method="POST">
+                <textarea id="entry-form-text">
 
+                </textarea>
             </form>
+        </section>
+        <section>
+
         </section>
     </body>
 </html>

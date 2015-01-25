@@ -60,7 +60,7 @@ public class GuestBookClient {
     }
 
     public void clearEntries() {
-        HttpDelete delete = new HttpDelete(root + "/entries/");
+        HttpDelete delete = new HttpDelete(String.format("%s/service/entries/", root));
         try (CloseableHttpClient client = HttpClientBuilder.create().build()) {
             final CloseableHttpResponse response = client.execute(delete);
 
