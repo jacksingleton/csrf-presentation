@@ -5,6 +5,7 @@ import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.AbstractHandler;
 import org.eclipse.jetty.server.handler.ContextHandler;
 import org.eclipse.jetty.server.handler.HandlerList;
+import org.eclipse.jetty.server.handler.ResourceHandler;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -48,6 +49,21 @@ public class GuestBookServer {
             }
         });
         handlers.addHandler(entryHandler);
+
+        handlers.addHandler(new AbstractHandler() {
+            @Override
+            public void handle(final String target, final Request baseRequest, final HttpServletRequest request, final HttpServletResponse response) throws IOException, ServletException {
+                if ("".equals(target)) {
+                    
+                    baseRequest.setHandled(true);
+                }
+            }
+        });
+
+        ResourceHandler resourceHandler = new ResourceHandler();
+        resourceHandler.setResourceBase(getClass().getResource("/static").toExternalForm());
+        handlers.addHandler(resourceHandler);
+
         return handlers;
     }
 
