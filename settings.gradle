@@ -1,2 +1,6 @@
 rootProject.name = 'xss-presentation'
 
+include 'presentation'
+
+include 'xss-demo-app'
+

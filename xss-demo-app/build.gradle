@@ -1,0 +1,12 @@
+dependencies {
+    testCompile 'org.fluentlenium:fluentlenium-core:0.10.3'
+}
+
+test {
+    exclude "**/*UATest*"
+    exclude "**/*IntTest*"
+}
+
+task intTest (type:Test, dependsOn: ['testClasses']) {
+    include '**/*IntTest.*'
+}
