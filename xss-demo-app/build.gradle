@@ -1,6 +1,5 @@
-apply plugin: 'application'
 
-mainClassName = "com.thoughtworks.appsec.xssDemo.GuestBookServerMain"
+//mainClassName = "com.thoughtworks.appsec.xssDemo.GuestBookServerMain"
 version = "1.0"
 
 dependencies {
@@ -16,11 +15,11 @@ task intTest (type:Test, dependsOn: ['test']) {
     include '**/*IntTest.*'
 }
 
-task uaTest (type:Test, dependsOn: ['test', 'jar']) {
+task uaTest (type:Test, dependsOn: ['build']) {
     include "**/*UATest*"
     doFirst {
         project.ext.process = ext.process = new ProcessBuilder().command(
-                "java", "-jar", "xss-demo-app/build/libs/xss-demo-app-1.0.jar").start()
+                "java",  "-jar", "xss-demo-app/build/libs/xss-demo-app-1.0.jar").start()
     }
 }
 
@@ -33,11 +32,3 @@ task cleanUp {
 }
 
 uaTest.finalizedBy(cleanUp);
-
-
-jar {
-    manifest {
-        attributes 'Main-Class': mainClassName
-    }
-    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
-}

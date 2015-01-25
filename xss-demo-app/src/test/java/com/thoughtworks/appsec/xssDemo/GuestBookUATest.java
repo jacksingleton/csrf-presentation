@@ -8,7 +8,6 @@ import org.junit.Test;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-@Ignore
 public class GuestBookUATest extends FluentTest {
 
     public static final String BASE_APP_URL = "http://localhost:8080";
@@ -20,8 +19,8 @@ public class GuestBookUATest extends FluentTest {
 
     @Before
     public void setUp(){
-        client.waitForPing();
-        client.clearEntries();
+//        client.waitForPing();
+//        client.clearEntries();
     }
 
     @Override
@@ -30,6 +29,12 @@ public class GuestBookUATest extends FluentTest {
     }
 
     @Test
+    public void testPing() {
+        client.waitForPing();
+    }
+
+    @Test
+    @Ignore
     public void testWriteInGuestBookCreatesNewEntry() {
         goTo(HOME_PAGE).await().untilPage().isLoaded()
                 .fill(ENTRY_FORM)
