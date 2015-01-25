@@ -20,4 +20,11 @@ public class InMemoryGuestBook implements GuestBook {
             return Collections.unmodifiableList(entries);
         }
     }
+
+    @Override //TODO: add security check
+    public void clearEntries() {
+        synchronized (this) {
+            entries.clear();
+        }
+    }
 }

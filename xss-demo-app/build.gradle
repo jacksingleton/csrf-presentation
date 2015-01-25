@@ -19,10 +19,21 @@ task intTest (type:Test, dependsOn: ['test']) {
 task uaTest (type:Test, dependsOn: ['test', 'jar']) {
     include "**/*UATest*"
     doFirst {
-        Process process = ext.process = new ProcessBuilder().command(
+        project.ext.process = ext.process = new ProcessBuilder().command(
                 "java", "-jar", "xss-demo-app/build/libs/xss-demo-app-1.0.jar").start()
     }
 }
+
+task cleanUp {
+    doFirst {
+        if (project.ext.process != null ) {
+            project.ext.process.destroy()
+        }
+    }
+}
+
+uaTest.finalizedBy(cleanUp);
+
 
 jar {
     manifest {

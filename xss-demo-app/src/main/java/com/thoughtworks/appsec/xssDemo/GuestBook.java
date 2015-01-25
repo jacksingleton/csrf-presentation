@@ -7,4 +7,5 @@ import java.util.List;
 
      List<GuestBookEntry> getEntries();
 
-}
+     void clearEntries();
+ }

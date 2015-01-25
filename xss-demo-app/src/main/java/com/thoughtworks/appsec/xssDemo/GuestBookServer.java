@@ -15,6 +15,7 @@ import java.io.PrintWriter;
 public class GuestBookServer {
 
     private Server server;
+    private GuestBook guestBook = new InMemoryGuestBook();
 
     public GuestBookServer(final int port) {
         server = new Server(port);
@@ -35,6 +36,18 @@ public class GuestBookServer {
             }
         });
         handlers.addHandler(pingHandler);
+
+        ContextHandler entryHandler = new ContextHandler("/entries");
+        entryHandler.setHandler(new AbstractHandler() {
+            @Override
+            public void handle(final String target, final Request baseRequest, final HttpServletRequest request, final HttpServletResponse response) throws IOException, ServletException {
+                if (request.getMethod().equals("DELETE") && "/".equals(target)) {
+                    guestBook.clearEntries();
+                    baseRequest.setHandled(true);
+                }
+            }
+        });
+        handlers.addHandler(entryHandler);
         return handlers;
     }
 
