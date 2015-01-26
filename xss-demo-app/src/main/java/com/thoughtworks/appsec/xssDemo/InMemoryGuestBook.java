@@ -14,7 +14,7 @@ public class InMemoryGuestBook implements GuestBook {
 
     public void addEntry(final String contents) {
         synchronized (this) {
-            entries.add(new GuestBookEntry(UUID.randomUUID(), contents));
+            entries.add(new GuestBookEntry(contents));
         }
     }
 

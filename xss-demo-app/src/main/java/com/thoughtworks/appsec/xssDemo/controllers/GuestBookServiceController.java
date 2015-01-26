@@ -1,12 +1,16 @@
 package com.thoughtworks.appsec.xssDemo.controllers;
 
 import com.thoughtworks.appsec.xssDemo.GuestBook;
+import com.thoughtworks.appsec.xssDemo.GuestBookEntry;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 public class GuestBookServiceController {
@@ -22,6 +26,16 @@ public class GuestBookServiceController {
     @ResponseBody
     public DeleteResult deleteAll() {
         return new DeleteResult(guestBook.clearEntries());
+    }
+
+    @RequestMapping(value="/service/entries", method= RequestMethod.POST)
+    public void postEntry(@RequestParam String entry) {
+        guestBook.addEntry(entry);
+    }
+
+    @RequestMapping(value="/service/entries", method= RequestMethod.GET)
+    public List<GuestBookEntry> allEntries() {
+        return guestBook.getEntries();
     }
 
     @Data
