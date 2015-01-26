@@ -29,8 +29,8 @@ public class GuestBookServiceController {
     }
 
     @RequestMapping(value="/service/entries", method= RequestMethod.POST)
-    public void postEntry(@RequestParam String entry) {
-        guestBook.addEntry(entry);
+    public void postEntry(@RequestParam String content) {
+        guestBook.addEntry(content);
     }
 
     @RequestMapping(value="/service/entries", method= RequestMethod.GET)

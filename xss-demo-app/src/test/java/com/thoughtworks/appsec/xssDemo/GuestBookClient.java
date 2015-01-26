@@ -66,7 +66,7 @@ public class GuestBookClient {
     public void postEntry(final String text) {
         try (CloseableHttpClient client = HttpClientBuilder.create().build()) {
             HttpPost post = new HttpPost(root + "/service/entries");
-            post.setEntity(new UrlEncodedFormEntity(ImmutableList.of(new BasicNameValuePair("entry", text))));
+            post.setEntity(new UrlEncodedFormEntity(ImmutableList.of(new BasicNameValuePair("content", text))));
             final CloseableHttpResponse response = client.execute(post);
             if (response.getStatusLine().getStatusCode() != 200) {
                 throw new RuntimeException(String.format("Failed with status message: %s", response.getStatusLine().getReasonPhrase()));
