@@ -14,6 +14,7 @@ public class GuestBookUATest extends FluentTest {
     private static final String HOME_PAGE = "/";
     private static final String ENTRY_FORM_TEXT = "#entry-form-text";
     private static final String ENTRY = ".entry";
+    private static final String ENTRY_FORM_SUBMIT = "#entry-form-submit";
 
     private GuestBookClient client = new GuestBookClient(BASE_APP_URL);
 

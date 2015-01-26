@@ -8,13 +8,13 @@
         </header>
         <section>
             <form th:action="@{/entries/}" method="POST">
-                <textarea id="entry-form-text">
-
-                </textarea>
+                <label for="entry-form-text">Leave a message:</label><input id="entry-form-text" type="text" name="entryText" />
             </form>
         </section>
         <section>
-
+            <div th:each="entry : ${entries}" class="entry">
+                <th th:text="${entry.contents}" />
+            </div>
         </section>
     </body>
 </html>
