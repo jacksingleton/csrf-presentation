@@ -19,8 +19,6 @@ public class GuestBookUATest extends FluentTest {
 
     private GuestBookClient client = new GuestBookClient();
 
-
-
     @Before
     public void setUp(){
         client.waitForPing();
