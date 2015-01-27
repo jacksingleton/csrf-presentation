@@ -70,11 +70,6 @@
             <h1>Cross Site Scripting</h1>
 
             <h3>OWASP #3</h3>
-            <aside class="notes">
-                <ul>
-                    <li></li>
-                </ul>
-            </aside>
         </section>
 
         <section>
@@ -84,6 +79,15 @@
                 renders to users in a context that alters the behavior or presentation of the site in a way not
                 intended by the application developer.
             </p>
+            <aside class="notes">
+                <ul>
+                    <li>Frankly, it’s not a very good name because it isn’t generally “cross site"</li>
+                    <li>The application developer thinks of the submission as data, but it quickly becomes code or
+                        content
+                    </li>
+                    <li>The murky line between code and content.</li>
+                </ul>
+            </aside>
         </section>
 
         <section>
@@ -92,6 +96,12 @@
             <p>
                 JavaScript, HTML, or CSS where it doesn’t belong messing with your app.
             </p>
+            <aside class="notes">
+                <ul>
+                    <li>The results: the attacker actually changes your site.</li>
+                    <li>By some ways of thinking, this is a kind of injection – injecting JavaScript into a page</li>
+                </ul>
+            </aside>
         </section>
 
         <section>
@@ -102,7 +112,18 @@
                 <li>Availability</li>
             </ul>
             <aside class="notes">
-
+                <ul>
+                    <li>Confidentiality: XSS provides attackers with the possibility of leaking data. A common attack is
+                        to inject JS on to page which writes resources to a page which can be used to leak information
+                        like session ids
+                    </li>
+                    <li>Integrity: Your integrity is basically nil if an attacker can basically rewrite the page at
+                        will.
+                    </li>
+                    <li>Availability: Not a direct availability threat, but can be a gateway to one if XSS is used as a
+                        mechanism for leaking admin creds
+                    </li>
+                </ul>
             </aside>
         </section>
 
@@ -113,6 +134,65 @@
                 <li>Server Reflected XSS</li>
                 <li>Client Reflected or DOM-based XSS</li>
             </ul>
+            <aside class="notes">
+                <ul>
+                    <li>What these three have in common is that input comes into the system from an attacker and is
+                        rendered as executable or presentation logic in another user’s browser.
+                    </li>
+                    <li>The difference is whether the delivery vector and whether it is in or out-of-band. What I mean
+                        by that is as follows:
+                    </li>
+                    <li>
+                        Persistent XSS
+                        <ul>
+                            <li>Persistent XSS is, by definition, stored on a server somewhere and delivered
+                                out-of-band. I
+                                think of it as the avatar or comment-page vulnerability:
+                            </li>
+                            <li>Imagine you could put any unrestricted content in a facebook post, including
+                                JavasScript, CSS,
+                                HTML, etc. You could set your profile to contain JavaScript that would, for example
+                                <ul>
+                                    <li>Prompt for a username and password</li>
+                                    <li>Steal session information</li>
+                                    <li>Show and/or hide different parts of the page</li>
+                                </ul>
+                            </li>
+                            <li>You save it in one session and it appears to users in another. Depending on the level of
+                                auditing and anonymity of posting, finding the source of the problem would be very
+                                challenging
+                            </li>
+                        </ul>
+
+                    </li>
+                    <li>
+                        Reflected XSS
+                        <ul>
+                            <li>Reflected XSS can be dangerous but cannot be delivered asynchronously like a persistent
+                                XSS
+                                attack
+                            </li>
+                            <li>In this case, the dangerous payload must be delivered via GET parameters or POST
+                                payload
+                            </li>
+                            <li>That means the attacker needs to send you a link, directing you to an endpoint they
+                                control in
+                                some way, perhaps via email or IM. You click on that link, and the malicious content
+                                from the
+                                URL is rendered to the page
+                            </li>
+                            <li>The effect of server and client reflected XSS is basically the same, but implementing
+                                controls
+                                is a bit different because of where the they exist.
+                            </li>
+                            <li>Client is by definition in JavaScript
+                            <li>Server is whatever your server-side web application platform
+
+                        </ul>
+                    </li>
+                </ul>
+            </aside>
+
         </section>
 
 
@@ -128,11 +208,24 @@
             <h2>Reflected XSS</h2>
             <img src="img/reflected-xss.png" style="width: 800px;"/>
             <aside class="notes">
-
+                <ul>
+                    <li>The only difference between client and server reflected is the mechanism by which the attacker
+                        content is included in the page. For server-reflected, a GET, POST, header, param, whatever is
+                        included during server-side page rendering.
+                    </li>
+                    <li>For DOM-based, JS is rendering things params or cookies directly into the page.</li>
+                    <li>The former is tricky because there are more ways to create this vulnerability. You can render
+                        anything in the request, really.
+                    </li>
+                    <li>The latter can only be via GET parameter, cookies and headers (if using Ajax). Data like POST
+                        body isn’t accessible.
+                    </li>
+                    <li>Either way, the effect is the same, attacker content is “bounced” through the request onto the
+                        page.
+                    </li>
+                </ul>
             </aside>
         </section>
-
-
         <section>
             <h2>Defending against XSS</h2>
             <ul>
@@ -197,7 +290,20 @@
                 <li>Or, heaven help you, a web-based HTML editor</li>
             </ul>
             <aside class="notes">
-
+                <ul>
+                    <li>In these cases, you don’t have the luxury of eliminating huge swaths of characters. So it is
+                        worth limiting your input as much as possible, but now you are reliant on output encoding.
+                        Output encoding is much trickier and harder to practice the positive modeling that I recommend
+                        so heavily.
+                    </li>
+                    <li>Black-listing is very hard to get right, particularly given the complexities of International
+                        character sets which you most likely need to support.
+                    </li>
+                    <li>Instead you may be force to take in a wide range of input, but control what is rendered. At this
+                        point context is critical.
+                    </li>
+                    <li>To give you a taste of the different types of contexts you need to be aware of…. NEXT SLIDE</li>
+                </ul>
             </aside>
         </section>
 
@@ -223,6 +329,10 @@
                 <li>JSON entity context</li>
                 <li>URL context</li>
             </ul>
+            <aside class="notes">
+                Each of these contexts is governed by a different set of rules. For example, what happens when an attacker manages to squeeze a less-than and greater-than into an HTML page? Or a quote into a bit of JS?
+                To make things worse, these contexts can be nested and the complexity increases dramatically.
+            </aside>
         </section>
         <section>
             <h2>What is Output Encoding?</h2>
@@ -282,6 +392,9 @@
                 Cross Site Request Forgery: using the existing browser session to perform a privileged operation the
                 user doesn't intend or expect.
             </p>
+            <aside class="notes">
+                The email deletion vulnerability
+            </aside>
         </section>
         <section>
             <h2>Defending Against CSRF</h2>
@@ -297,15 +410,18 @@
             <ul>
                 <li>
                     <a href="https://www.owasp.org/index.php/XSS_%28Cross_Site_Scripting%29_Prevention_Cheat_Sheet">OWASP
-                    XSS Cheat Sheet</a></li>
+                        XSS Cheat Sheet</a></li>
                 <li>
-                    <a href="https://www.owasp.org/index.php/Cross-Site_Request_Forgery_%28CSRF%29_Prevention_Cheat_Sheet">OWASP CSRF Cheat Sheet</a>
+                    <a href="https://www.owasp.org/index.php/Cross-Site_Request_Forgery_%28CSRF%29_Prevention_Cheat_Sheet">OWASP
+                        CSRF Cheat Sheet</a>
                 </li>
                 <li>
-                    <a href="https://www.owasp.org/index.php/Top_10_2013-A3-Cross-Site_Scripting_(XSS)">OWASP Top 10 - A3 – Cross-Site Scripting</a>
+                    <a href="https://www.owasp.org/index.php/Top_10_2013-A3-Cross-Site_Scripting_(XSS)">OWASP Top 10 -
+                        A3 – Cross-Site Scripting</a>
                 </li>
                 <li>
-                    <a href="https://www.owasp.org/index.php/Top_10_2013-A8-Cross-Site_Request_Forgery_(CSRF)">OWASP Top 10 - A8 – Cross-Site Request Forgery</a>
+                    <a href="https://www.owasp.org/index.php/Top_10_2013-A8-Cross-Site_Request_Forgery_(CSRF)">OWASP Top
+                        10 - A8 – Cross-Site Request Forgery</a>
                 </li>
             </ul>
         </section>
