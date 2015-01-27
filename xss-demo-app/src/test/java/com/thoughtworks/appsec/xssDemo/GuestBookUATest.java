@@ -3,6 +3,9 @@ package com.thoughtworks.appsec.xssDemo;
 import org.fluentlenium.adapter.FluentTest;
 import org.junit.Before;
 import org.junit.Test;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 
 import java.util.concurrent.TimeUnit;
 
@@ -17,6 +20,12 @@ public class GuestBookUATest extends FluentTest {
     private static final String ENTRY_FORM_SUBMIT = "#entry-form-submit";
 
     private GuestBookClient client = new GuestBookClient();
+
+    private WebDriver driver = new ChromeDriver();
+
+    public WebDriver getDefaultDriver() {
+        return driver;
+    }
 
     @Before
     public void setUp(){
