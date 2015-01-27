@@ -1,11 +1,11 @@
 package com.thoughtworks.appsec.xssDemo;
 
+import com.thoughtworks.appsec.xssDemo.utils.GuestBookClient;
 import org.fluentlenium.adapter.FluentTest;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 
 import java.util.concurrent.TimeUnit;
 

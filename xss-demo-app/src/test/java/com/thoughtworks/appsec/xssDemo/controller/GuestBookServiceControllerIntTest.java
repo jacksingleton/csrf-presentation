@@ -1,6 +1,6 @@
 package com.thoughtworks.appsec.xssDemo.controller;
 
-import com.thoughtworks.appsec.xssDemo.GuestBookClient;
+import com.thoughtworks.appsec.xssDemo.utils.GuestBookClient;
 import org.junit.Before;
 import org.junit.Test;
 
