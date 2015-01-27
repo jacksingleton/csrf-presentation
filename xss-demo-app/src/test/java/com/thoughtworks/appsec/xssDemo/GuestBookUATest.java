@@ -2,7 +2,6 @@ package com.thoughtworks.appsec.xssDemo;
 
 import org.fluentlenium.adapter.FluentTest;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.concurrent.TimeUnit;
@@ -36,7 +35,6 @@ public class GuestBookUATest extends FluentTest {
     }
 
     @Test
-    @Ignore
     public void testWriteInGuestBookCreatesNewEntry() {
         goTo(HOME_PAGE).await().untilPage().isLoaded()
                 .fill(ENTRY_FORM_TEXT)

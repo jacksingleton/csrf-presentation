@@ -19,8 +19,11 @@
     function refresh() {
         $.ajax("/service/entries", {
             contentType: "json",
-            success: function(response, result, xhr){
-                console.log(response);
+            success: function(entries, result, xhr){
+                $("#entries").html("");
+                entries.map(function(entry){
+                    $("#entries").append("<div class='entry'>" + entry.contents + "</div>");
+                });
             }
         });
     }
