@@ -1,7 +1,5 @@
 package com.thoughtworks.appsec.xssDemo;
 
-import java.util.UUID;
-
 public class GuestBookEntry {
     private final String contents;
 

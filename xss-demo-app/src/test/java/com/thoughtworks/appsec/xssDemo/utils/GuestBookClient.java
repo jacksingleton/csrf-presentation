@@ -7,6 +7,7 @@ import com.thoughtworks.appsec.xssDemo.TestException;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpDelete;
@@ -105,6 +106,7 @@ public class GuestBookClient {
         }
     }
 
+    @ToString
     public static class Entry {
         @Getter
         @Setter
