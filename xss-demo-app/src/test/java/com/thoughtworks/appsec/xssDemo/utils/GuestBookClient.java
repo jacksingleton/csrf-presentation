@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableList;
 import com.thoughtworks.appsec.xssDemo.TestException;
+import com.thoughtworks.selenium.webdriven.commands.Close;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,6 +14,7 @@ import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicNameValuePair;
@@ -21,6 +23,7 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 @Component
@@ -79,28 +82,33 @@ public class GuestBookClient {
     }
 
     public List<Entry> getEntries() {
-        HttpGet get = new HttpGet(root + "/service/entries");
-        try (CloseableHttpClient client = HttpClientBuilder.create().build()) {
-            final CloseableHttpResponse response = client.execute(get);
+        return doHttpRequest(new HttpGet(root + "/service/entries"), response->{
             ObjectMapper mapper = new ObjectMapper();
             JavaType type = mapper.getTypeFactory().constructCollectionType(List.class, Entry.class);
-            return new ObjectMapper().readValue(response.getEntity().getContent(), type);
-        } catch (IOException e) {
-            throw new TestException("Get entries failed.", e);
-        }
+            try {
+                return new ObjectMapper().readValue(response.getEntity().getContent(), type);
+            } catch (IOException e) {
+                throw new TestException("Failed to clean entries.", e);
+            }
+        });
     }
 
     public void clearEntries() {
-        HttpDelete delete = new HttpDelete(String.format("%s/service/entries/", root));
-        try (CloseableHttpClient client = HttpClientBuilder.create().build()) {
-            final CloseableHttpResponse response = client.execute(delete);
-
+        doHttpRequest(new HttpDelete(String.format("%s/service/entries/", root)), response->{
             if (response.getStatusLine().getStatusCode() != 200) {
                 throw new TestException(String.format("Failed to delete: %s",
                         response.getStatusLine().getReasonPhrase()));
             }
+            return null;
+        });
+    }
 
-            response.getEntity().writeTo(System.out);
+    public <T> T doHttpRequest(HttpRequestBase request, Function<CloseableHttpResponse, T> handler) {
+        try (CloseableHttpClient client = HttpClientBuilder.create().build()) {
+            final CloseableHttpResponse response = client.execute(request);
+
+            return handler.apply(response);
+
         } catch (IOException e) {
             throw new TestException("Failed to clean entries.", e);
         }
