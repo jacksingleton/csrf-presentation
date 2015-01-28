@@ -5,9 +5,20 @@
         <script src="js/guestbook.js"></script>
         <script src="bootstrap/js/bootstrap.js"></script>
         <link rel="stylesheet" href="bootstrap/css/bootstrap.css" />
+        <link rel="stylesheet" href="application.css" />
     </head>
     <body>
         <div class="container">
+            <nav class="navbar navbar-default">
+                <form id="delete-all-form" class="navbar-form navbar-left">
+                    <input type="button" class="form-control" id="delete-all-button" value="Delete All" />
+                </form>
+                <form class="navbar-form navbar-right" id="login-form">
+                    <input type="text" class="form-control" id="username-text"  placeholder="username"/>
+                    <input type="password" class="form-control" id="password-text" placeholder="password" />
+                    <input type="submit" class="form-control" id="login-button" value="Submit" />
+                </form>
+            </nav>
             <header>
                 <h1>Guest Book</h1>
             </header>
