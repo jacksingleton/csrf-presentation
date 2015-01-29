@@ -31,6 +31,7 @@
         });
 
         $("#filter-text").keyup(function(){
+            window.location.hash="#filter=" + $(this).val();
             refresh();
         });
 
@@ -52,10 +53,19 @@
         });
     }
 
+    function getFilterText() {
+        var matches = /#filter=(.*)/.exec(window.location.hash);
+        if (matches && matches.length > 1) {
+            return matches[1];
+        } else {
+            return "";
+        }
+    }
+
     function refresh() {
         $.ajax("/service/entries", {
             contentType: "json",
-            data: {filter: $("#filter-text").val()}
+            data: {filter: getFilterText()}
         }).success(function (entries, result, xhr) {
             $("#entries").html("");
             entries.found.map(function (entry) {
@@ -63,7 +73,7 @@
             });
 
             if (entries.found.length == 0 && entries.filter != "") {
-                showError("No results for search " + entries.filter);
+                showError("No results for filter " + entries.filter);
             } else {
                 $("#error-message").hide();
             }
