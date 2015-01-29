@@ -19,6 +19,6 @@ public class GuestBookServiceControllerIntTest {
     @Test
     public void testAddEntry() {
         client.postEntry("hello world");
-        assertTrue(client.getEntries().stream().allMatch(entry -> entry.getContents().equals("hello world")));
+        assertTrue(client.getEntries().getFound().stream().allMatch(entry -> entry.getContents().equals("hello world")));
     }
 }

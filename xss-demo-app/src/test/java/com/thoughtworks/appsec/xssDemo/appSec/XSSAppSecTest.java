@@ -34,7 +34,7 @@ public class XSSAppSecTest {
     }
 
     private Stream<GuestBookClient.Entry> getEntryWithText(String text) {
-        return client.getEntries().stream().filter(entry -> entry.getContents().equals(text));
+        return client.getEntries().getFound().stream().filter(entry -> entry.getContents().equals(text));
     }
 
     private boolean entryExistsWithText(String text) {

@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableList;
 import com.thoughtworks.appsec.xssDemo.TestException;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -84,14 +83,14 @@ public class GuestBookClient {
         }
     }
 
-    public List<Entry> getEntries() {
+    public EntryResult getEntries() {
         return doHttpRequest(new HttpGet(root + "/service/entries"), response->{
             ObjectMapper mapper = new ObjectMapper();
-            JavaType type = mapper.getTypeFactory().constructCollectionType(List.class, Entry.class);
+            checkResponse(response);
             try {
-                return new ObjectMapper().readValue(response.getEntity().getContent(), type);
+                return new ObjectMapper().readValue(response.getEntity().getContent(), EntryResult.class);
             } catch (IOException e) {
-                throw new TestException("Failed to clean entries.", e);
+                throw new TestException("Failed to fetch entries.", e);
             }
         });
     }
@@ -102,7 +101,7 @@ public class GuestBookClient {
             checkResponse(client.execute(createLoginPost()));
             checkResponse(client.execute(new HttpDelete(String.format("%s/service/entries/", root))));
         } catch (IOException e) {
-            throw new TestException("Failed to clean entries.", e);
+            throw new TestException("Failed to clear entries.", e);
         }
     }
 
@@ -132,6 +131,13 @@ public class GuestBookClient {
         } catch (IOException e) {
             throw new TestException("Failed to clean entries.", e);
         }
+    }
+
+    @Getter
+    @Setter
+    public static class EntryResult {
+        private List<Entry> found;
+        private String filter;
     }
 
     @ToString

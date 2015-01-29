@@ -54,7 +54,7 @@
             data: {filter: $("#filter-text").val()}
         }).success(function (entries, result, xhr) {
             $("#entries").html("");
-            entries.map(function (entry) {
+            entries.found.map(function (entry) {
                 $("#entries").append("<div class='entry'>" + entry.contents + "</div>");
             });
         });

@@ -48,10 +48,18 @@ public class GuestBookServiceController {
     }
 
     @RequestMapping(value="/service/entries", method= RequestMethod.GET)
-    public List<GuestBookEntry> findEntries(@RequestParam String filter) {
-        return guestBook.getEntries().stream()
+    public SearchResult findEntries(@RequestParam(defaultValue = "") String filter) {
+        List<GuestBookEntry> found = guestBook.getEntries().stream()
                 .filter(entry->entry.getContents().contains(filter))
                 .collect(Collectors.toList());
+
+        return new SearchResult(found, filter);
+    }
+
+    @Data
+    public static class SearchResult {
+        private final List<GuestBookEntry> found;
+        private final String filter;
     }
 
     @Data
