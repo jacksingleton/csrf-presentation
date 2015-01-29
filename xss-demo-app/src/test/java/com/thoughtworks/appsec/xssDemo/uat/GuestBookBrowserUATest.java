@@ -1,6 +1,5 @@
 package com.thoughtworks.appsec.xssDemo.uat;
 
-import com.google.common.base.Predicate;
 import com.thoughtworks.appsec.xssDemo.utils.GuestBookClient;
 import org.fluentlenium.adapter.FluentTest;
 import org.fluentlenium.core.Fluent;

@@ -1,7 +1,7 @@
 package com.thoughtworks.appsec.xssDemo.controllers;
 
 import com.thoughtworks.appsec.xssDemo.Constants;
-import com.thoughtworks.appsec.xssDemo.LoginService;
+import com.thoughtworks.appsec.xssDemo.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,10 +16,10 @@ import javax.servlet.http.HttpSession;
 @Controller
 public class LoginController {
 
-    private final LoginService userService;
+    private final AuthService userService;
 
     @Autowired
-    public LoginController(final LoginService userService) {
+    public LoginController(final AuthService userService) {
         this.userService = userService;
     }
 
@@ -28,8 +28,7 @@ public class LoginController {
     public ResponseEntity<UserState> login(@RequestParam final String username,
                                            @RequestParam final String password,
                                            final HttpSession session) {
-
-        final boolean loggedIn = userService.login(username, password);
+        final boolean loggedIn = userService.doAuth(username, password);
         return new ResponseEntity<>(
                 storeAppState(new UserState(loggedIn), session),
                 loggedIn ? HttpStatus.OK : HttpStatus.UNAUTHORIZED);

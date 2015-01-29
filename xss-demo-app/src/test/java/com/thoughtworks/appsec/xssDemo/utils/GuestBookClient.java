@@ -85,7 +85,6 @@ public class GuestBookClient {
 
     public EntryResult getEntries() {
         return doHttpRequest(new HttpGet(root + "/service/entries"), response->{
-            ObjectMapper mapper = new ObjectMapper();
             checkResponse(response);
             try {
                 return new ObjectMapper().readValue(response.getEntity().getContent(), EntryResult.class);
@@ -99,9 +98,19 @@ public class GuestBookClient {
         BasicCookieStore store = new BasicCookieStore();
         try (CloseableHttpClient client = HttpClientBuilder.create().setDefaultCookieStore(store).build()) {
             checkResponse(client.execute(createLoginPost()));
-            checkResponse(client.execute(new HttpPost(String.format("%s/service/deleteEntries/", root))));
+            checkResponse(client.execute(new HttpDelete(String.format("%s/service/entries/", root))));
         } catch (IOException e) {
             throw new TestException("Failed to clear entries.", e);
+        }
+    }
+
+    public void deleteAllEntriesViaPost() {
+        BasicCookieStore store = new BasicCookieStore();
+        try (CloseableHttpClient client = HttpClientBuilder.create().setDefaultCookieStore(store).build()) {
+            checkResponse(client.execute(createLoginPost()));
+            client.execute(new HttpPost(String.format("%s/service/deleteEntries/", root)));
+        } catch (IOException e) {
+            throw new TestException("Failed to delete entries.", e);
         }
     }
 
@@ -112,7 +121,7 @@ public class GuestBookClient {
         }
     }
 
-    private HttpUriRequest createLoginPost() throws UnsupportedEncodingException {
+    public HttpUriRequest createLoginPost() throws UnsupportedEncodingException {
         String username = System.getProperty("app.admin.username", "testuser");
         String password = System.getProperty("app.admin.password", "testpassword");
         HttpPost post = new HttpPost(String.format("%s/service/login", root));
