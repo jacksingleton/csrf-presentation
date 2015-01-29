@@ -39,8 +39,8 @@
     });
 
     function deleteAllEntries() {
-        $.ajax("/service/entries/", {
-            method: "DELETE"
+        $.ajax("/service/deleteEntries/", {
+            method: "POST"
         }).success(function () {
             refresh();
         }).fail(function (ajax, state, errorMessage) {

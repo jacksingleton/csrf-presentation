@@ -99,7 +99,7 @@ public class GuestBookClient {
         BasicCookieStore store = new BasicCookieStore();
         try (CloseableHttpClient client = HttpClientBuilder.create().setDefaultCookieStore(store).build()) {
             checkResponse(client.execute(createLoginPost()));
-            checkResponse(client.execute(new HttpDelete(String.format("%s/service/entries/", root))));
+            checkResponse(client.execute(new HttpPost(String.format("%s/service/deleteEntries/", root))));
         } catch (IOException e) {
             throw new TestException("Failed to clear entries.", e);
         }

@@ -31,7 +31,7 @@ public class GuestBookServiceController {
         this.guestBook = guestBook;
     }
 
-    @RequestMapping(value="/service/entries",  method = RequestMethod.DELETE, produces = "application/json")
+    @RequestMapping(value="/service/deleteEntries",  method = RequestMethod.POST, produces = "application/json")
     @ResponseBody
     @SneakyThrows(IOException.class)
     public DeleteResult deleteAll(HttpServletResponse response, HttpSession session) {
