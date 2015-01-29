@@ -13,12 +13,15 @@ import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpRequestBase;
+import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicNameValuePair;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
@@ -27,6 +30,7 @@ import java.util.function.Supplier;
 @Component
 public class GuestBookClient {
 
+    /** TODO: refactor this ***/
     private String root;
 
     public GuestBookClient() {
@@ -92,13 +96,30 @@ public class GuestBookClient {
     }
 
     public void clearEntries() {
-        doHttpRequest(new HttpDelete(String.format("%s/service/entries/", root)), response->{
-            if (response.getStatusLine().getStatusCode() != 200) {
-                throw new TestException(String.format("Failed to delete: %s",
-                        response.getStatusLine().getReasonPhrase()));
-            }
-            return null;
-        });
+        BasicCookieStore store = new BasicCookieStore();
+        try (CloseableHttpClient client = HttpClientBuilder.create().setDefaultCookieStore(store).build()) {
+            checkResponse(client.execute(createLoginPost()));
+            checkResponse(client.execute(new HttpDelete(String.format("%s/service/entries/", root))));
+        } catch (IOException e) {
+            throw new TestException("Failed to clean entries.", e);
+        }
+    }
+
+    private void checkResponse(final CloseableHttpResponse response) {
+        if (response.getStatusLine().getStatusCode() != 200) {
+            throw new TestException(String.format("Failed to delete: %s",
+                    response.getStatusLine().getReasonPhrase()));
+        }
+    }
+
+    private HttpUriRequest createLoginPost() throws UnsupportedEncodingException {
+        String username = System.getProperty("app.admin.username", "testuser");
+        String password = System.getProperty("app.admin.password", "testpassword");
+        HttpPost post = new HttpPost(String.format("%s/service/login", root));
+        post.setEntity(new UrlEncodedFormEntity(ImmutableList.of(
+                new BasicNameValuePair("username", username),
+                new BasicNameValuePair("password", password))));
+        return post;
     }
 
     public <T> T doHttpRequest(HttpRequestBase request, Function<CloseableHttpResponse, T> handler) {

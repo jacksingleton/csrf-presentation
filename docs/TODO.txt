@@ -1,0 +1,2 @@
+- Make a way to authenticate when running tests
+- Remove the full stack from INT tests or removing them entirely

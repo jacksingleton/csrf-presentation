@@ -63,8 +63,8 @@ public class GuestBookUATest extends FluentTest {
         goTo(HOME_PAGE).await().untilPage().isLoaded();
 
         assertThat(find(DELETE_ALL_BUTTON).first().isDisplayed(), is(false));
-        fill(USERNAME_TEXT).with("admin")
-                .fill(PASSWORD_TEXT).with("admin")
+        fill(USERNAME_TEXT).with("testuser")
+                .fill(PASSWORD_TEXT).with("testpassword")
                 .click(LOGIN_BUTTON)
                 .await().atMost(5, SECONDS).until(DELETE_ALL_BUTTON).areDisplayed();
 
