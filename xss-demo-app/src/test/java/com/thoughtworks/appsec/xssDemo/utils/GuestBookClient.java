@@ -1,6 +1,5 @@
 package com.thoughtworks.appsec.xssDemo.utils;
 
-import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableList;
 import com.thoughtworks.appsec.xssDemo.TestException;

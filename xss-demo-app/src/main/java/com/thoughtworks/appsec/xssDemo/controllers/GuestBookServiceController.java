@@ -1,9 +1,9 @@
 package com.thoughtworks.appsec.xssDemo.controllers;
 
+import com.thoughtworks.appsec.xssDemo.AuthService;
 import com.thoughtworks.appsec.xssDemo.Constants;
 import com.thoughtworks.appsec.xssDemo.GuestBook;
 import com.thoughtworks.appsec.xssDemo.GuestBookEntry;
-import com.thoughtworks.appsec.xssDemo.AuthService;
 import lombok.Data;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;

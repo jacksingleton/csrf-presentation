@@ -1,7 +1,7 @@
 package com.thoughtworks.appsec.xssDemo.controllers;
 
-import com.thoughtworks.appsec.xssDemo.Constants;
 import com.thoughtworks.appsec.xssDemo.AuthService;
+import com.thoughtworks.appsec.xssDemo.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

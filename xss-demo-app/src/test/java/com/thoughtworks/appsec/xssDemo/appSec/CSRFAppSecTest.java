@@ -1,7 +1,6 @@
 package com.thoughtworks.appsec.xssDemo.appSec;
 
 import com.thoughtworks.appsec.xssDemo.utils.GuestBookClient;
-import org.apache.http.HttpStatus;
 import org.fluentlenium.adapter.FluentTest;
 import org.junit.Test;
 
