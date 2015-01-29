@@ -10,6 +10,7 @@
                 success: function () {
                     loadUserState();
                     refresh();
+                    $("#entry-form-text").val("");
                 }
             });
             return false;
@@ -23,6 +24,14 @@
         $("#login-form").submit(function () {
             login();
             return false;
+        });
+
+        $("#filter-form").submit(function(keyCode){
+            return false;
+        });
+
+        $("#filter-text").keyup(function(){
+            refresh();
         });
 
         refresh();
@@ -41,7 +50,8 @@
 
     function refresh() {
         $.ajax("/service/entries", {
-            contentType: "json"
+            contentType: "json",
+            data: {filter: $("#filter-text").val()}
         }).success(function (entries, result, xhr) {
             $("#entries").html("");
             entries.map(function (entry) {

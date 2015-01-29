@@ -22,7 +22,6 @@ task intTest (type:Test, dependsOn: ['build']) {
     }
 }
 
-applicationDefaultJvmArgs = ["-Dapp.admin.username=testuser", "-Dapp.admin.password=testpassword"]
 
 task uaTest (type:Test, dependsOn: ['build']) {
     include "**/*UATest*"

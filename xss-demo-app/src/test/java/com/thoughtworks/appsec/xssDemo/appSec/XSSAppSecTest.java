@@ -1,4 +1,4 @@
-package com.thoughtworks.appsec.xssDemo;
+package com.thoughtworks.appsec.xssDemo.appSec;
 
 import com.thoughtworks.appsec.xssDemo.utils.GuestBookClient;
 import org.junit.Before;

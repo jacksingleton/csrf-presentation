@@ -10,6 +10,9 @@
     <body>
         <div class="container">
             <nav class="navbar navbar-default">
+                <form class="navbar-form navbar-left" id="filter-form">
+                    <input type="text" class="form-control navbar-left", id="filter-text" placeholder="enter filter" />
+                </form>
                 <form id="delete-all-form" class="navbar-form navbar-left">
                     <input type="button" class="form-control" id="delete-all-button" value="Delete All" />
                 </form>
@@ -24,7 +27,7 @@
             </header>
             <section>
                 <form action="#" method="POST" id="entry-form">
-                    <label for="entry-form-text">Leave a message:</label><input id="entry-form-text" type="text" name="entryText" />
+                    <input id="entry-form-text" type="text" name="entryText" placeholder="Message text"/>
                     <input type="submit" name="submit" id="entry-form-submit" value="Leave a message"/>
                 </form>
             </section>

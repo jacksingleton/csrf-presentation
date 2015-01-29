@@ -1,3 +1,15 @@
 #delete-all-form {
     display: none;
 }
+
+label {
+    margin: 10px;
+}
+
+#entry-form-text {
+    width: 300px;
+}
+
+#filter-text {
+    width: 300px;
+}
