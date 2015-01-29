@@ -13,3 +13,7 @@ label {
 #filter-text {
     width: 300px;
 }
+
+#error-message {
+    display:none;
+}

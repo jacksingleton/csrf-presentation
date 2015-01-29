@@ -34,6 +34,10 @@
             refresh();
         });
 
+        $("#error-message").click(function(){
+            $(this).hide();
+        });
+
         refresh();
         loadUserState();
     });
@@ -57,6 +61,12 @@
             entries.found.map(function (entry) {
                 $("#entries").append("<div class='entry'>" + entry.contents + "</div>");
             });
+
+            if (entries.found.length == 0 && entries.filter != "") {
+                showError("No results for search " + entries.filter);
+            } else {
+                $("#error-message").hide();
+            }
         });
     }
 
@@ -84,8 +94,13 @@
         }).success(function (user, result, xhr) {
             initUI(user);
         }).fail(function (ajax, state, errorMessage) {
-            alert("TODO: display error dialog.");
+            showError(errorMessage);
         });
+    }
+
+    function showError(message){
+        $("#error-message").html(message);
+        $("#error-message").show();
     }
 
 }());
