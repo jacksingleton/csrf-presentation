@@ -1,4 +1,3 @@
-//TODO: refactor AJAX code
 (function () {
     $(document).ready(function () {
         $("#entry-form").submit(function () {
@@ -49,7 +48,7 @@
         }).success(function () {
             refresh();
         }).fail(function (ajax, state, errorMessage) {
-            alert("TODO: display error dialog.");
+            showError(errorMessage);
         });
     }
 

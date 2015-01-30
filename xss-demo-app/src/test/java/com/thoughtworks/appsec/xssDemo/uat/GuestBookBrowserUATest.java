@@ -25,8 +25,6 @@ public class GuestBookBrowserUATest extends FluentTest {
     public static final String DELETE_ALL_BUTTON = "#delete-all-button";
     private static final String FILTER_TEXT = "#filter-text";
 
-    private GuestBookClient client = new GuestBookClient();
-
     private WebDriver driver = new ChromeDriver();
 
     public WebDriver getDefaultDriver() {
@@ -36,8 +34,11 @@ public class GuestBookBrowserUATest extends FluentTest {
     @Before
     public void setUp() {
         withDefaultPageWait(10, SECONDS);
-        client.waitForPing();
-        client.clearEntries();
+        client().waitForPing().clearEntries();
+    }
+
+    private GuestBookClient client() {
+        return new GuestBookClient();
     }
 
     @Override
@@ -72,8 +73,7 @@ public class GuestBookBrowserUATest extends FluentTest {
 
     @Test
     public void testFilterMessages() {
-        client.postEntry("foo bar");
-        client.postEntry("no match");
+        client().postEntry("foo bar").postEntry("no match");
         goTo(HOME_PAGE).await().untilPage().isLoaded()
                 .fill(FILTER_TEXT).with("bar")
                 .await().atMost(3, SECONDS).until((Fluent f) -> f.find(ENTRY).size() == 1);

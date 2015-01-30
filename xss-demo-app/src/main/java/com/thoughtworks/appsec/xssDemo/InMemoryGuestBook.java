@@ -23,7 +23,6 @@ public class InMemoryGuestBook implements GuestBook {
         }
     }
 
-    @Override //TODO: add security check
     public int clearEntries() {
         synchronized (this) {
             int count = entries.size();

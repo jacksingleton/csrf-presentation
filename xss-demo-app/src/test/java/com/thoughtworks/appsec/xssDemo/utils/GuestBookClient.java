@@ -40,8 +40,9 @@ public class GuestBookClient {
         this.root = appRoot;
     }
 
-    public void waitForPing() {
+    public GuestBookClient waitForPing() {
         waitFor(() -> ping().equals(Optional.of(200)));
+        return this;
     }
 
     private void waitFor(Supplier<Boolean> test) {
@@ -68,8 +69,7 @@ public class GuestBookClient {
         }
     }
 
-    //TODO: serious refactoring of this class
-    public void postEntry(final String text) {
+    public GuestBookClient postEntry(final String text) {
         try (CloseableHttpClient client = HttpClientBuilder.create().build()) {
             HttpPost post = new HttpPost(root + "/service/entries");
             post.setEntity(new UrlEncodedFormEntity(ImmutableList.of(new BasicNameValuePair("content", text))));
@@ -80,6 +80,7 @@ public class GuestBookClient {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        return this;
     }
 
     public EntryResult getEntries() {
@@ -93,7 +94,7 @@ public class GuestBookClient {
         });
     }
 
-    public void clearEntries() {
+    public GuestBookClient clearEntries() {
         BasicCookieStore store = new BasicCookieStore();
         try (CloseableHttpClient client = HttpClientBuilder.create().setDefaultCookieStore(store).build()) {
             checkResponse(client.execute(createLoginPost()));
@@ -101,6 +102,7 @@ public class GuestBookClient {
         } catch (IOException e) {
             throw new TestException("Failed to clear entries.", e);
         }
+        return this;
     }
 
     public void deleteAllEntriesViaPost() {
