@@ -23,7 +23,6 @@ import java.util.stream.Collectors;
 public class GuestBookServiceController {
 
     private GuestBook guestBook;
-    private AuthService authService;
 
     @Autowired
     public GuestBookServiceController(GuestBook guestBook) {
