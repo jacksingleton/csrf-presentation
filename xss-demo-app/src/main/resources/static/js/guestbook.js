@@ -50,4 +50,16 @@
             initUI(user);
         });
     }
+
+    function readCookie(name) {
+        name += '=';
+        var parts = document.cookie.split(/;\s*/);
+        for (var i = 0; i < parts.length; i++)
+        {
+            var part = parts[i];
+            if (part.indexOf(name) == 0)
+                return part.substring(name.length)
+        }
+        return null;
+    }
 }());

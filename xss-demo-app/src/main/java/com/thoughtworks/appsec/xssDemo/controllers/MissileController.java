@@ -15,7 +15,7 @@ public class MissileController {
 
     @RequestMapping(value = "/service/missileStatus", method = RequestMethod.GET)
     @ResponseBody
-    public String missileStatus(final HttpSession session) {
+    public String missileStatus() {
         if (missilesLaunched) {
             return "Here comes world war three! 🚀";
         } else {
