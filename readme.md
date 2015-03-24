@@ -12,7 +12,7 @@ A presentation and sample app on CSRF defense and mitigation.
 ## Running ##
 
 ### Running the Application ###
-From the root directory `./gradlew xss-demo-app:run`
+From the root directory `./gradlew csrf-demo-app:run`
 
 ### Running the Presentation ###
 From the root directory `./gradlew presentation:run`

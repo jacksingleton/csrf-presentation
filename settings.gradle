@@ -1,5 +1,5 @@
-rootProject.name = 'xss-presentation'
+rootProject.name = 'csrf-presentation'
 
 include 'presentation'
-include 'xss-demo-app'
+include 'csrf-demo-app'
 

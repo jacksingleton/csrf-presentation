@@ -1,0 +1,7 @@
+version = "1.0"
+
+dependencies {
+    compile "org.projectlombok:lombok:1.+"
+    testCompile 'org.fluentlenium:fluentlenium-core:0.10.3'
+    testCompile 'org.springframework.boot:spring-boot-starter-test'
+}
