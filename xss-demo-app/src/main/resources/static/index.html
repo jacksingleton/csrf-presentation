@@ -6,16 +6,15 @@
         <script src="bootstrap/js/bootstrap.js"></script>
         <link rel="stylesheet" href="bootstrap/css/bootstrap.css" />
         <link rel="stylesheet" href="application.css" />
+        <style type="text/css">
+            #missile-status {
+                font-style: italic;
+            }
+        </style>
     </head>
     <body>
         <div class="container">
             <nav class="navbar navbar-default">
-                <form class="navbar-form navbar-left" id="filter-form">
-                    <input type="text" class="form-control navbar-left", id="filter-text" placeholder="enter filter" />
-                </form>
-                <form id="delete-all-form" class="navbar-form navbar-left">
-                    <input type="button" class="form-control" id="delete-all-button" value="Delete All" />
-                </form>
                 <form class="navbar-form navbar-right" id="login-form">
                     <input type="text" class="form-control" id="username-text"  placeholder="username"/>
                     <input type="password" class="form-control" id="password-text" placeholder="password" />
@@ -23,18 +22,13 @@
                 </form>
             </nav>
             <header>
-                <h1>Guest Book</h1>
-            </header>
-            <div id="error-message" class="alert alert-danger" role="alert"></div>
-            <section>
-                <form action="#" method="POST" id="entry-form">
-                    <input id="entry-form-text" type="text" name="entryText" placeholder="Message text"/>
-                    <input type="submit" name="submit" id="entry-form-submit" value="Leave a message"/>
-                </form>
-            </section>
-            <section id="entries">
+                <h1>Welcome to missile control!</h1>
 
-            </section>
+                <form id="missiles-form">
+                    <input type="submit" value="Fire the missiles!"/>
+                </form>
+            </header>
+            <h2 id="missile-status"></h2>
         </div>
     </body>
 </html>
