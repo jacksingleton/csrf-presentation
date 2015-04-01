@@ -17,7 +17,7 @@ public class MissileController {
     @ResponseBody
     public String missileStatus() {
         if (missilesLaunched) {
-            return "Here comes world war three! 🚀";
+            return "Here comes world war three! \ud83d\ude80";
         } else {
             return "Missiles not launched yet; the world survives another day";
         }
