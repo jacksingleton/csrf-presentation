@@ -13,6 +13,7 @@ A presentation and sample app on CSRF defense and mitigation.
 
 ### Running the Application ###
 From the root directory `./gradlew csrf-demo-app:run`
+The username is 'admin', the password is 'password'
 
 ### Running the Presentation ###
 From the root directory `./gradlew presentation:run`
