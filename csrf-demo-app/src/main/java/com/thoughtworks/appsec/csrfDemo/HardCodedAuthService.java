@@ -1,4 +1,4 @@
-package com.thoughtworks.appsec.xssDemo;
+package com.thoughtworks.appsec.csrfDemo;
 
 import org.springframework.stereotype.Component;
 

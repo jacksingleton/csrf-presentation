@@ -1,4 +1,4 @@
-package com.thoughtworks.appsec.xssDemo.presentation;
+package com.thoughtworks.appsec.csrfDemo.presentation;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;

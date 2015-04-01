@@ -1,4 +1,4 @@
-package com.thoughtworks.appsec.xssDemo.controllers;
+package com.thoughtworks.appsec.csrfDemo.controllers;
 
 import lombok.Data;
 

@@ -1,6 +1,6 @@
-package com.thoughtworks.appsec.xssDemo.controllers;
+package com.thoughtworks.appsec.csrfDemo.controllers;
 
-import com.thoughtworks.appsec.xssDemo.Constants;
+import com.thoughtworks.appsec.csrfDemo.Constants;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
