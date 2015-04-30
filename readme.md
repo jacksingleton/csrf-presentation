@@ -3,7 +3,7 @@
 A presentation and sample app on CSRF defense and mitigation.
 
 ## Requirements ##
-- Java 8
+- Java 7
 - Chrome
 
 ## Setting up ##
